@@ -1,11 +1,8 @@
-require 'json'
+require_relative "./lib/image_service"
 
 def handler(event:, context:)
-  {
-    statusCode: 200,
-    body: {
-      message: 'Go Serverless v1.0! Your function executed successfully!',
-      input: event
-    }.to_json
-  }
+  key     = event["Records"][0].dig("s3", "object", "key")
+  resizer = ImageService::Resizer.new(key, 280)
+
+  resizer.resize!
 end
