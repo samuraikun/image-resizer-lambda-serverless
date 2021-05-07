@@ -1,0 +1,10 @@
+# Copy from https://github.com/customink/ruby-vips-lambda/blob/master/Dockerfile
+FROM lambci/lambda:build-ruby2.7
+
+# serverless frameworkのインストール
+RUN curl -sL https://rpm.nodesource.com/setup_12.x | bash - \
+  && yum -y install nodejs && yum -y clean all \
+  && npm install -g serverless
+
+WORKDIR /var/task/
+CMD ["/bin/bash"]
